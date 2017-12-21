@@ -1,3 +1,0 @@
-E:/CppDistro/WORK/sfml.2/sfml2.2/CMakeFiles/sfml2.2.dir
-E:/CppDistro/WORK/sfml.2/sfml2.2/CMakeFiles/edit_cache.dir
-E:/CppDistro/WORK/sfml.2/sfml2.2/CMakeFiles/rebuild_cache.dir

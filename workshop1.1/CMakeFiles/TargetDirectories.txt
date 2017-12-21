@@ -1,3 +1,0 @@
-E:/CppDistro/WORK/Cpp_Course/Workshop1/workshop1.1/CMakeFiles/workshop1.1.dir
-E:/CppDistro/WORK/Cpp_Course/Workshop1/workshop1.1/CMakeFiles/edit_cache.dir
-E:/CppDistro/WORK/Cpp_Course/Workshop1/workshop1.1/CMakeFiles/rebuild_cache.dir
