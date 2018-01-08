@@ -14,9 +14,9 @@ void initGenerator(PRNG &generator)
     generator.engine.seed(seed);
 }
 
-unsigned randomIndex(PRNG &generator, unsigned minValue, unsigned maxValue)
+unsigned randomIndex(PRNG &generator, unsigned min, unsigned max)
 {
-    std::uniform_int_distribution<unsigned> distribution(minValue, maxValue);
+    std::uniform_int_distribution<unsigned> distribution(min, max);
     return distribution(generator.engine);
 }
 
