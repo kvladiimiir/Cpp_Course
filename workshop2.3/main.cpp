@@ -14,7 +14,7 @@ void initGenerator(PRNG &generator)
     generator.engine.seed(seed);
 }
 
-unsigned randomIndex(PRNG &generator, unsigned min, unsigned max)
+unsigned randomSpeed(PRNG &generator, unsigned min, unsigned max)
 {
     std::uniform_int_distribution<unsigned> distribution(min, max);
     return distribution(generator.engine);
