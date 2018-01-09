@@ -149,10 +149,10 @@ void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, const flo
             sf::Vector2f dtPosition = balls[n].position - balls[m].position;
             sf::Vector2f dtSpeed = balls[n].speed - balls[m].speed;
 
-            float distance = std::sqrt(pow(dtPosition.x, 2) + std::pow(dtPosition.y, 2));
-            float changeSpeed = ((dtPosition.x * dtSpeed.x) + (dtPosition.y * dtSpeed.y)) / std::pow(distance, 2);
+            float length = std::sqrt(pow(dtPosition.x, 2) + std::pow(dtPosition.y, 2));
+            float changeSpeed = ((dtPosition.x * dtSpeed.x) + (dtPosition.y * dtSpeed.y)) / std::pow(length, 2);
 
-            if (distance <= (2 * BALL_SIZE))
+            if (length <= (2 * BALL_SIZE))
             {
                 balls[m].speed = balls[m].speed + changeSpeed * dtPosition;
                 balls[n].speed = balls[n].speed - changeSpeed * dtPosition;
