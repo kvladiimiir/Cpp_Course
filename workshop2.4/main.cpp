@@ -76,6 +76,7 @@ void init(Ball (&balls)[5], sf::Color (&color)[8], const float BALL_SIZE)
 
     sf::CircleShape shape(BALL_SIZE);
     shape.setPosition({200, 120});
+    shape.setOrigin(BALL_SIZE, BALL_SIZE);
     int m = randomIndexColor(generator);
     int n = randomIndexColor(generator);
     shape.setFillColor(sf::Color((color[m].r + color[n].r) / 2, (color[m].g + color[n].g) / 2, (color[m].b + color[n].b) / 2));
@@ -86,6 +87,7 @@ void init(Ball (&balls)[5], sf::Color (&color)[8], const float BALL_SIZE)
     balls[0].shape = shape;
 
     shape.setPosition({550, 120});
+    shape.setOrigin(BALL_SIZE, BALL_SIZE);
     m = randomIndexColor(generator);
     n = randomIndexColor(generator);
     shape.setFillColor(sf::Color((color[m].r + color[n].r) / 2, (color[m].g + color[n].g) / 2, (color[m].b + color[n].b) / 2));
@@ -96,6 +98,7 @@ void init(Ball (&balls)[5], sf::Color (&color)[8], const float BALL_SIZE)
     balls[1].shape = shape;
 
     shape.setPosition({200, 220});
+    shape.setOrigin(BALL_SIZE, BALL_SIZE);
     m = randomIndexColor(generator);
     n = randomIndexColor(generator);
     shape.setFillColor(sf::Color((color[m].r + color[n].r) / 2, (color[m].g + color[n].g) / 2, (color[m].b + color[n].b) / 2));
@@ -106,6 +109,7 @@ void init(Ball (&balls)[5], sf::Color (&color)[8], const float BALL_SIZE)
     balls[2].shape = shape;
 
     shape.setPosition({300, 120});
+    shape.setOrigin(BALL_SIZE, BALL_SIZE);
     m = randomIndexColor(generator);
     n = randomIndexColor(generator);
     shape.setFillColor(sf::Color((color[m].r + color[n].r) / 2, (color[m].g + color[n].g) / 2, (color[m].b + color[n].b) / 2));
@@ -116,6 +120,7 @@ void init(Ball (&balls)[5], sf::Color (&color)[8], const float BALL_SIZE)
     balls[3].shape = shape;
 
     shape.setPosition({300, 220});
+    shape.setOrigin(BALL_SIZE, BALL_SIZE);
     m = randomIndexColor(generator);
     n = randomIndexColor(generator);
     shape.setFillColor(sf::Color((color[m].r + color[n].r) / 2, (color[m].g + color[n].g) / 2, (color[m].b + color[n].b) / 2));
@@ -158,7 +163,7 @@ void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, const flo
         balls[i].position = balls[i].shape.getPosition();
         balls[i].position += balls[i].speed * dt;
 
-        if (balls[i].position.x + 2 * BALL_SIZE >= WINDOW_WIDTH)
+        if (balls[i].position.x + BALL_SIZE >= WINDOW_WIDTH)
         {
             balls[i].speed.x = -balls[i].speed.x;
         }
@@ -166,7 +171,7 @@ void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, const flo
         {
             balls[i].speed.x = -balls[i].speed.x;
         }
-        if (balls[i].position.y + 2 * BALL_SIZE >= WINDOW_HEIGHT)
+        if (balls[i].position.y + BALL_SIZE >= WINDOW_HEIGHT)
         {
             balls[i].speed.y = -balls[i].speed.y;
         }
