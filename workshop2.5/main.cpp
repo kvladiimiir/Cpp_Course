@@ -22,6 +22,12 @@ unsigned randomIndex(PRNG &generator, unsigned minValue, unsigned maxValue)
     return distribution(generator.engine);
 }
 
+unsigned randomIndexColor(PRNG &generator)
+{
+    std::uniform_int_distribution<unsigned> distribution(0, 7);
+    return distribution(generator.engine);
+}
+
 struct Ball
 {
     sf::Vector2f speed;
@@ -29,12 +35,39 @@ struct Ball
     sf::CircleShape shape;
 };
 
-sf::Color randomColor(PRNG &generator)
+void resolutionColor(sf::Color (&color)[8])
 {
-    return {
-        sf::Uint8(randomIndex(generator, 0, 255)),
-        sf::Uint8(randomIndex(generator, 0, 255)),
-        sf::Uint8(randomIndex(generator, 0, 255))};
+    color[0].r = 255;
+    color[0].g = 255;
+    color[0].b = 0;
+
+    color[1].r = 0;
+    color[1].g = 255;
+    color[1].b = 255;
+
+    color[2].r = 0;
+    color[2].g = 0;
+    color[2].b = 255;
+
+    color[3].r = 255;
+    color[3].g = 0;
+    color[3].b = 255;
+
+    color[4].r = 255;
+    color[4].g = 0;
+    color[4].b = 0;
+
+    color[5].r = 0;
+    color[5].g = 255;
+    color[5].b = 0;
+
+    color[6].r = 150;
+    color[6].g = 150;
+    color[6].b = 155;
+
+    color[7].r = 200;
+    color[7].g = 255;
+    color[7].b = 132;
 }
 
 void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, const float dt, const float BALL_SIZE, std::vector<Ball> &balls)
@@ -48,7 +81,7 @@ void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, const flo
         {
             balls[i].speed.x = -balls[i].speed.x;
         }
-        if (balls[i].position.x - BALL_SIZE < 0)
+        if (balls[i].position.x < 0)
         {
             balls[i].speed.x = -balls[i].speed.x;
         }
@@ -56,7 +89,7 @@ void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, const flo
         {
             balls[i].speed.y = -balls[i].speed.y;
         }
-        if (balls[i].position.y - BALL_SIZE < 0)
+        if (balls[i].position.y < 0)
         {
             balls[i].speed.y = -balls[i].speed.y;
         }
@@ -83,7 +116,7 @@ void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, const flo
     }
 }
 
-void init(sf::Event::MouseButtonEvent &event, std::vector<Ball> &balls, const float BALL_SIZE)
+void init(sf::Event::MouseButtonEvent &event, std::vector<Ball> &balls, const float BALL_SIZE, sf::Color (&color)[8])
 {
     bool initBall = true;
     sf::Vector2f mousePosition = {float(event.x), float(event.y)};
@@ -106,17 +139,21 @@ void init(sf::Event::MouseButtonEvent &event, std::vector<Ball> &balls, const fl
         sf::CircleShape shape(BALL_SIZE);
         shape.setPosition(mousePosition);
         shape.setOrigin(BALL_SIZE, BALL_SIZE);
-        shape.setFillColor(randomColor(generator));
+
+        int m = randomIndexColor(generator);
+        int n = randomIndexColor(generator);
+        shape.setFillColor(sf::Color((color[m].r + color[n].r) / 2, (color[m].g + color[n].g) / 2, (color[m].b + color[n].b) / 2));
+
         float speedX = randomIndex(generator, 300, 500);
         float speedY = randomIndex(generator, 300, 500);
 
         newBall.speed = {speedX, speedY};
         newBall.shape = shape;
-        balls.push_back(newBall); //в конце иначе будет пустая
+        balls.push_back(newBall); // иначе будет пустая
     }
 }
 
-void pollEvents(sf::RenderWindow &window, std::vector<Ball> &balls, const float BALL_SIZE)
+void pollEvents(sf::RenderWindow &window, std::vector<Ball> &balls, const float BALL_SIZE, sf::Color (&color)[8])
 {
     sf::Event event;
 
@@ -128,7 +165,7 @@ void pollEvents(sf::RenderWindow &window, std::vector<Ball> &balls, const float 
             window.close();
             break;
         case sf::Event::MouseButtonPressed:
-            init(event.mouseButton, balls, BALL_SIZE);
+            init(event.mouseButton, balls, BALL_SIZE, color);
         default:
             break;
         }
@@ -157,10 +194,12 @@ int main()
     sf::Clock clock;
 
     std::vector<Ball> balls;
+    sf::Color(color[8]);
+    resolutionColor(color);
 
     while (window.isOpen())
     {
-        pollEvents(window, balls, BALL_SIZE);
+        pollEvents(window, balls, BALL_SIZE, color);
         const float dt = clock.restart().asSeconds();
         update(WINDOW_WIDTH, WINDOW_HEIGHT, dt, BALL_SIZE, balls);
         redrawFrame(window, balls);
