@@ -163,19 +163,19 @@ void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, const flo
         balls[i].position = balls[i].shape.getPosition();
         balls[i].position += balls[i].speed * dt;
 
-        if (balls[i].position.x + BALL_SIZE >= WINDOW_WIDTH)
+        if ((balls[i].position.x + BALL_SIZE >= WINDOW_WIDTH) && (balls[i].speed.x > 0))
         {
             balls[i].speed.x = -balls[i].speed.x;
         }
-        if (balls[i].position.x < 0)
+        if ((balls[i].position.x - BALL_SIZE < 0) && (balls[i].speed.x < 0))
         {
             balls[i].speed.x = -balls[i].speed.x;
         }
-        if (balls[i].position.y + BALL_SIZE >= WINDOW_HEIGHT)
+        if ((balls[i].position.y + BALL_SIZE >= WINDOW_HEIGHT) && (balls[i].speed.y > 0))
         {
             balls[i].speed.y = -balls[i].speed.y;
         }
-        if (balls[i].position.y < 0)
+        if ((balls[i].position.y - BALL_SIZE < 0) && (balls[i].speed.y < 0))
         {
             balls[i].speed.y = -balls[i].speed.y;
         }
