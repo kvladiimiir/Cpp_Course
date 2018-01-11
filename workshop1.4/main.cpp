@@ -13,7 +13,7 @@ void onMouseMove(const sf::Event::MouseMoveEvent &event, sf::Vector2f &mousePosi
 }
 
 // Опрашивает и обрабатывает доступные события в цикле.
-void pollEvents(sf::RenderWindow &window, sf::Vector2f &mousePosition, sf::Sprite &laser)
+void pollEvents(sf::RenderWindow &window, sf::Vector2f &mousePosition, sf::Sprite &laser, bool &MouseButtonPressed)
 {
     sf::Event event;
     while (window.pollEvent(event))
@@ -25,6 +25,7 @@ void pollEvents(sf::RenderWindow &window, sf::Vector2f &mousePosition, sf::Sprit
             break;
         case sf::Event::MouseButtonPressed:
             laser.setPosition(event.mouseButton.x, event.mouseButton.y);
+            MouseButtonPressed = true;
             break;
         case sf::Event::MouseMoved:
             onMouseMove(event.mouseMove, mousePosition);
@@ -74,10 +75,13 @@ void update(sf::Sprite &laser, sf::Sprite &cat, float &deltaTime)
 }
 
 // Рисует и выводит один кадр
-void redrawFrame(sf::RenderWindow &window, sf::Sprite &cat, sf::Sprite &laser)
+void redrawFrame(sf::RenderWindow &window, sf::Sprite &cat, sf::Sprite &laser, bool &MouseButtonPressed)
 {
     window.clear(sf::Color(255, 255, 255));
-    window.draw(laser);
+    if (MouseButtonPressed)
+    {
+        window.draw(laser);
+    }
     window.draw(cat);
     window.display();
 }
@@ -89,6 +93,7 @@ int main()
 
     sf::Clock clock;
     sf::Vector2f mousePosition;
+    bool MouseButtonPressed = false;
 
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -106,8 +111,8 @@ int main()
     while (window.isOpen())
     {
         float deltaTime = clock.restart().asSeconds();
-        pollEvents(window, mousePosition, laser);
+        pollEvents(window, mousePosition, laser, MouseButtonPressed);
         update(laser, cat, deltaTime);
-        redrawFrame(window, cat, laser);
+        redrawFrame(window, cat, laser, MouseButtonPressed);
     }
 }
